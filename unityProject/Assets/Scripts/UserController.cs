@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UserController : MonoBehaviour
+public  class UserController : MonoBehaviour
 {
 	#region  Singelton
     private static UserController _instance;
@@ -25,6 +25,18 @@ public class UserController : MonoBehaviour
 
     public User User;
 
+void OnEnable()
+{
+	//DataService.Instance.UserLive(User.Id,true);
 }
+
+void OnDisable()
+{
+	DataService.Instance.UserLive(User.Id,false);
+}
+
+}
+
+
 
 

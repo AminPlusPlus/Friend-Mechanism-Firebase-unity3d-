@@ -17,6 +17,13 @@ public class Authenication : MonoBehaviour
     [SerializeField] private Button SignUpButton;
     #endregion
 
+    [Header("Panel")]
+    [Space(5)]
+
+    [SerializeField] private GameObject RegisPanel;
+    [SerializeField] private GameObject GamePanel;
+
+
     [SerializeField] private Text DebugText;
 
     // Use this for initialization

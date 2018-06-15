@@ -12,6 +12,11 @@ public sealed class DataService
     //REFERENCES
     public DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
 
+    //Database key paths
+
+    private const string userPath = "Users";
+    private const string requestFriend = "RequestFriend";
+
     /// <summary>
     /// Create to Database base on id User Content data
     /// </summary>
@@ -19,7 +24,7 @@ public sealed class DataService
     /// <param name="data"></param>
     public void CreateUser(string id, Dictionary<string, object> data)
     {
-        reference.Child("Users").Child(id).SetValueAsync(data).ContinueWith(task =>
+        reference.Child(userPath).Child(id).SetValueAsync(data).ContinueWith(task =>
         {
 
             if (!task.IsCompleted)
@@ -36,7 +41,7 @@ public sealed class DataService
     /// <param name="id"></param>
     public void FetchUserData(string id)
     {
-        reference.Child("Users").Child(id).GetValueAsync().ContinueWith(task =>
+        reference.Child(userPath).Child(id).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsFaulted)
             {
@@ -58,6 +63,25 @@ public sealed class DataService
             }
         });
     }
+
+	/// <summary>
+	/// When user out/In of app/game Database IsLive key , going to change
+	/// </summary>
+	/// <param name="isLive"></param>
+    public void UserLive(string id,bool isLive)
+    {
+        reference.Child(userPath).Child(id).Child("isLive").SetValueAsync(isLive)
+            .ContinueWith(task =>
+            {
+                if (!task.IsCompleted)
+                {
+                    //Handle Error
+                    UnityEngine.Debug.Log(task.Exception.Message);
+                }
+            });
+    }
+
+
 
 
 
