@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Firebase.Auth;
-using Firebase.Database;
 
 
 public class Authenication : MonoBehaviour
 {
     FirebaseAuth auth;
-    DatabaseReference dbRef;
 
     #region  UI Elements
     [Header("Registration UI Elements")]
@@ -25,9 +23,6 @@ public class Authenication : MonoBehaviour
     void Start()
     {
         auth = FirebaseAuth.DefaultInstance;
-        dbRef = FirebaseDatabase.DefaultInstance.RootReference;
-
-
     }
 
 
@@ -53,13 +48,20 @@ public class Authenication : MonoBehaviour
 
              Dictionary<string, object> userData = new Dictionary<string, object>()
              {
-                {"email" , newUser.Email}
+                {"email" , newUser.Email},
+				{"isLive",true}
              };
 
-			 //Save to DB
-			dbRef.Child(DataService.Instance.RefUser).Child(newUser.UserId).SetValueAsync(userData);
+			 DataService.Instance.CreateUser(newUser.UserId,userData);
+			 //creating user
+			 User user = new User(newUser.UserId,userData);
+			 //set user
+			 UserController.Instance.User = user;
 
-             DebugText.text = "Welcome : " + newUser.Email;
+			 Debug.Log(UserController.Instance.User.Id);
+	
+			 DebugText.text = "Welcome : " + UserController.Instance.User.Email;
+
          });
 
     }
@@ -83,8 +85,12 @@ public class Authenication : MonoBehaviour
 
              FirebaseUser newUser = task.Result;
 
+			 DataService.Instance.FetchUserData(newUser.UserId);
+
              DebugText.text = "Welcome : " + newUser.Email;
          });
 
     }
+
+	
 }
