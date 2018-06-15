@@ -10,18 +10,10 @@ public class Authenication : MonoBehaviour
 	FirebaseAuth auth;
 
 	#region  UI Elements
-	[Header("UI Elements")]
-	[Space(5)]
-	[Header("Sign In")]
-	[SerializeField] private InputField EmailSignIn;
-	[SerializeField] private InputField PasswordSignIn;
-	[SerializeField] private InputField SignInButton;
-
-	[Header("Sign Up")]
+	[Header("Registration UI Elements")]
 	[Space(5)]
 	[SerializeField] private InputField EmailSignUp;
 	[SerializeField] private InputField PasswordSignUp;
-	[SerializeField] private InputField ConfirmPassword;
 	[SerializeField] private Button SignUpButton;
 	#endregion
 
@@ -37,7 +29,7 @@ public class Authenication : MonoBehaviour
 
 	public void SignUp ()
 	{
-		auth.CreateUserWithEmailAndPasswordAsync(EmailSignUp.text,ConfirmPassword.text).ContinueWith(task => 
+		auth.CreateUserWithEmailAndPasswordAsync(EmailSignUp.text,PasswordSignUp.text).ContinueWith(task => 
 		{
 			 if (task.IsCanceled)
             {
@@ -55,8 +47,6 @@ public class Authenication : MonoBehaviour
 			FirebaseUser newUser = task.Result;
 
 			DebugText.text = "Welcome : " + newUser.Email;
-
-
 		});
 
 
