@@ -33,7 +33,9 @@ public class Authenication : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// Sign Up with Email and Password
+    /// </summary>
     public void SignUp()
     {
         auth.CreateUserWithEmailAndPasswordAsync(EmailSignUp.text, PasswordSignUp.text).ContinueWith(task =>
@@ -68,11 +70,15 @@ public class Authenication : MonoBehaviour
 			 Debug.Log(UserController.Instance.User.Id);
 	
 			 DebugText.text = "Welcome : " + UserController.Instance.User.Email;
-
+            
+                Invoke("EnableGamePanel",1f);
          });
 
     }
 
+    /// <summary>
+    /// Sign In with Email and Password
+    /// </summary>
     public void SignIn()
     {
         auth.SignInWithEmailAndPasswordAsync(EmailSignUp.text, PasswordSignUp.text).ContinueWith(task =>
@@ -95,8 +101,17 @@ public class Authenication : MonoBehaviour
 			 DataService.Instance.FetchUserData(newUser.UserId);
 
              DebugText.text = "Welcome : " + newUser.Email;
+
+             //invoking method by the delay
+             Invoke("EnableGamePanel",1f);
          });
 
+    }
+
+    void EnableGamePanel ()
+    {
+        RegisPanel.SetActive(false);
+        GamePanel.SetActive(true);
     }
 
 	

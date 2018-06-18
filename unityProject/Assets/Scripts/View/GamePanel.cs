@@ -9,6 +9,9 @@ public class GamePanel : MonoBehaviour
    [SerializeField] private RectTransform[] headerElements;
    private RectTransform highlightedElement;
 
+   [Space(5)]
+   [Header("Content Panels")]
+   public GameObject[] panels; 
    private void Start()
    {
        highlightedElement = headerElements[0];
@@ -19,6 +22,15 @@ public class GamePanel : MonoBehaviour
    {
        highlightedElement = headerElements[i];
        StartCoroutine(HighlightHeaderElement());
+
+        for (int a = 0; a < panels.Length; a++)
+        {
+            if (a == i)
+            panels[a].SetActive(true);
+            else 
+            panels[a].SetActive(false);
+        }
+      
    }
 
    IEnumerator HighlightHeaderElement()
