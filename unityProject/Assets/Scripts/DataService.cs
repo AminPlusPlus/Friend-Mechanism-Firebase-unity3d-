@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System;
 using Firebase.Database;
+using UnityEngine;
 public sealed class DataService
 {
-
+    public delegate void fetchedUser (User user);
+    public  event fetchedUser OnFetchedUser;
     //SINGELTON
     static readonly DataService _instance = new DataService();
     public static DataService Instance { get { return _instance; } }
@@ -58,6 +60,9 @@ public sealed class DataService
                 User usr = new User(snapshot.Key, data);
                 //Setting User
                 UserController.Instance.User = usr;
+
+                if (OnFetchedUser != null)
+                    OnFetchedUser(usr);
 
                 UnityEngine.Debug.Log(data["email"] + "  " + data["isLive"] + " " + snapshot.Key);
             }

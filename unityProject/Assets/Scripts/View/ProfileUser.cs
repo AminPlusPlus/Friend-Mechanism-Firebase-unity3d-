@@ -10,12 +10,23 @@ public class ProfileUser : MonoBehaviour
 	[SerializeField] private Text fullName;
 
 
+
+	void OnEnable()
+	{
+		DataService.Instance.OnFetchedUser += initView;
+		
+	}
+
+	void OnDisable() 
+	{
+		DataService.Instance.OnFetchedUser -= initView;
+	}
 	/// <summary>
 	/// Initilization UI elements from DB
 	/// </summary>
-	void initView ()
-	{
-
+	void initView (User usr)
+	{	
+		fullName.text = usr.Email;
 	}
 	
 }
