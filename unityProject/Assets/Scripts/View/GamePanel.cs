@@ -17,7 +17,10 @@ public class GamePanel : MonoBehaviour
        highlightedElement = headerElements[0];
    }
 
-  
+  /// <summary>
+  /// Clicking Button controlling panels
+  /// </summary>
+  /// <param name="i"></param>
    public void OnClickButton (int i)
    {
        highlightedElement = headerElements[i];
